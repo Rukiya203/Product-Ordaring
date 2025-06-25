@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 // POST route for creating a new ProductOrder
-app.post(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\/?$/, async (req, res) => {
+app.post('/tmf-api/productOrderingManagement/v5/productOrder/productOrder', async (req, res) => {
   const payload = req.body;
 
   if (!payload || typeof payload !== 'object') {
@@ -40,7 +40,7 @@ app.post(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\
     payload.id = payload.id || uuidv4();
     payload['@type'] = payload['@type'] || 'ProductOrder';
     payload.state = payload.state || 'inProgress';
-    payload.creationDate = new Date().toISOString();
+    payload.creationDate = payload.creationDate || new Date().toISOString();
 
     const newOrder = new ProductOrder(payload);
     await newOrder.save();
@@ -55,7 +55,7 @@ app.post(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\
 });
 
 // GET all Product Orders
-app.get(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\/?$/, async (req, res) => {
+app.get('/tmf-api/productOrderingManagement/v5/productOrder/productOrder', async (req, res) => {
   try {
     let query = {};
     const { state, completionDate, creationDate } = req.query;
@@ -92,8 +92,8 @@ app.get(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\/
 });
 
 // GET single order by ID
-app.get(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\/([^\/]+)\/?$/, async (req, res) => {
-  const orderId = req.params[0];
+app.get('/tmf-api/productOrderingManagement/v5/productOrder/productOrder/:id', async (req, res) => {
+  const orderId = req.params.id;
 
   try {
     const order = await ProductOrder.findOne({ id: orderId });
