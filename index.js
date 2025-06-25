@@ -100,6 +100,7 @@ app.post(/^\/tmf-api\/productOrderingManagement\/v5\/productOrder\/productOrder\
 
     const newOrder = new ProductOrder(cleanPayload);
     await newOrder.save();
+    console.log("✅ Order saved successfully:", newOrder.id);
 
     const locationUrl = `/tmf-api/productOrderingManagement/v5/productOrder/productOrder/${cleanPayload.id}`;
     res.setHeader("Location", locationUrl);
