@@ -5,11 +5,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173', // Allow only this origin
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Accept']
-}));
+app.use(cors()); // This allows all origins
 
 // Load Mongoose model
 const ProductOrder = require('./models/ProductOrder');
